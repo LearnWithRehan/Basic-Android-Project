@@ -20,7 +20,21 @@
 
     <TextView
         android:id="@+id/txtAmount"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="Products"
+        android:textStyle="bold"
+        android:layout_marginTop="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/txtItems"
+        android:textColor="#333"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

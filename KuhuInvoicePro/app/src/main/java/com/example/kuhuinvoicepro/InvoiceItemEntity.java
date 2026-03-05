@@ -20,7 +20,7 @@ public class InvoiceItemEntity {
     @PrimaryKey(autoGenerate = true)
     public int itemId;
 
-    public int invoiceId;   // 🔥 Link to parent invoice
+    public int invoiceId;
 
     public String productName;
     public double qty;

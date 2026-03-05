@@ -17,9 +17,15 @@ public interface InvoiceDao {
     @Insert
     void insertInvoiceItems(List<InvoiceItemEntity> items);
 
+//    @Transaction
+//    @Query("SELECT * FROM invoice_table ORDER BY id DESC")
+//    List<InvoiceWithItems> getAllInvoicesWithItems();
+
+
     @Transaction
     @Query("SELECT * FROM invoice_table ORDER BY id DESC")
     List<InvoiceWithItems> getAllInvoicesWithItems();
+
 
 
 

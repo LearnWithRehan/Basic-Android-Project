@@ -31,11 +31,26 @@ public class DateReportAdapter extends RecyclerView.Adapter<DateReportAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        InvoiceWithItems invoice = list.get(position);
+        InvoiceWithItems data = list.get(position);
 
-        holder.txtCustomer.setText("Customer: " + invoice.invoice.customerName);
-        holder.txtDate.setText("Date: " + invoice.invoice.date);
-        holder.txtAmount.setText("Net Amount: ₹" + invoice.invoice.netAmount);
+        holder.txtCustomer.setText("Customer : " + data.invoice.customerName);
+        holder.txtDate.setText("Date : " + data.invoice.date);
+        holder.txtAmount.setText("Net Amount : ₹ " + data.invoice.netAmount);
+
+        StringBuilder items = new StringBuilder();
+
+        for (InvoiceItemEntity item : data.items) {
+
+            items.append(item.productName)
+                    .append(" | Qty: ")
+                    .append(item.qty)
+                    .append(" | ₹")
+                    .append(item.amount)
+                    .append("\n");
+
+        }
+
+        holder.txtItems.setText(items.toString());
     }
 
     @Override
@@ -45,7 +60,7 @@ public class DateReportAdapter extends RecyclerView.Adapter<DateReportAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCustomer, txtDate, txtAmount;
+        TextView txtCustomer, txtDate, txtAmount, txtItems;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,6 +68,7 @@ public class DateReportAdapter extends RecyclerView.Adapter<DateReportAdapter.Vi
             txtCustomer = itemView.findViewById(R.id.txtCustomer);
             txtDate = itemView.findViewById(R.id.txtDate);
             txtAmount = itemView.findViewById(R.id.txtAmount);
+            txtItems = itemView.findViewById(R.id.txtItems);
         }
     }
 }
