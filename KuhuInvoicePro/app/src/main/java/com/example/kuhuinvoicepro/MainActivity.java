@@ -1,5 +1,6 @@
 package com.example.kuhuinvoicepro;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -46,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     double totalAmount = 0;
     double totalQty = 0;
     double totalRate = 0;
-
+    int lastSavedItemIndex = 0;
+    String invoiceNo = null;
+    int savedInvoiceId = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +116,9 @@ public class MainActivity extends AppCompatActivity {
             totalAmount = 0;
             totalQty = 0;
             totalRate = 0;
-
+            invoiceNo = null;
+            savedInvoiceId = -1;
+            lastSavedItemIndex = 0;
             tvTotalProduct.setText("Items: 0");
             tvTotalQty.setText("0");
             tvTotalRate.setText("0");
@@ -184,26 +189,63 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
+//    private void showDeleteDialog(int position) {
+//
+//        InvoiceItem item = itemList.get(position);
+//
+//        new androidx.appcompat.app.AlertDialog.Builder(this)
+//                .setTitle("आइटम हटाएँ")
+//                .setMessage("क्या आप \""
+//                        + item.getProductName() +
+//                        "\" को हटाना चाहते हैं?")
+//                .setPositiveButton("हाँ", (dialog, which) -> {
+//
+//                    totalAmount -= item.getAmount();
+//                    totalQty -= item.getQty();
+//                    totalRate -= item.getRate();
+//
+//                    adapter.removeItem(position);
+//
+//                    updateTotals();
+//
+//                    Toast.makeText(this, "आइटम सफलतापूर्वक हटाया गया", Toast.LENGTH_SHORT).show();
+//                })
+//                .setNegativeButton("नहीं", null)
+//                .setCancelable(false)
+//                .show();
+//    }
+
+
+
+
     private void showDeleteDialog(int position) {
 
         InvoiceItem item = itemList.get(position);
 
         new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("आइटम हटाएँ")
-                .setMessage("क्या आप \""
-                        + item.getProductName() +
-                        "\" को हटाना चाहते हैं?")
+                .setMessage("क्या आप \"" + item.getProductName() + "\" को हटाना चाहते हैं?")
                 .setPositiveButton("हाँ", (dialog, which) -> {
 
                     totalAmount -= item.getAmount();
                     totalQty -= item.getQty();
                     totalRate -= item.getRate();
 
+                    new Thread(() -> {
+
+                        if(item.getItemId() != 0){
+                            invoiceDao.deleteItemById(item.getItemId());
+                        }
+
+                    }).start();
+
                     adapter.removeItem(position);
 
                     updateTotals();
 
-                    Toast.makeText(this, "आइटम सफलतापूर्वक हटाया गया", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,
+                            "आइटम सफलतापूर्वक हटाया गया",
+                            Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("नहीं", null)
                 .setCancelable(false)
@@ -246,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
         double qty = Double.parseDouble(qtyStr);
         double rate = Double.parseDouble(rateStr);
 
-        InvoiceItem item = new InvoiceItem(srNo, product, qty, rate);
+        InvoiceItem item = new InvoiceItem(0, srNo, product, qty, rate);
         itemList.add(item);
 
         // ✅ Update totals
@@ -343,6 +385,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void generatePDF() {
 
+//        if (invoiceNo == null) {
+//
+//            invoiceNo = "INV-" +
+//                    new SimpleDateFormat("yyyyMMddHHmmss",
+//                            Locale.getDefault()).format(new Date());
+//        }
+
         String name = etCustomerName.getText().toString();
         String address = etCustomerAddress.getText().toString();
         String number = etCustomerMobile.getText().toString();
@@ -417,9 +466,17 @@ public class MainActivity extends AppCompatActivity {
         ).format(new Date());
 
 
-        String invoiceNo = "INV-" +
-                new SimpleDateFormat("yyyyMMddHHmmss",
-                        Locale.getDefault()).format(new Date());
+//        String invoiceNo = "INV-" +
+//                new SimpleDateFormat("yyyyMMddHHmmss",
+//                        Locale.getDefault()).format(new Date());
+
+        if (invoiceNo == null) {
+
+            invoiceNo = "INV-" +
+                    new SimpleDateFormat("yyyyMMddHHmmss",
+                            Locale.getDefault()).format(new Date());
+        }
+
 
         // ================= CALCULATE TOTALS =================
         double totalQty = 0;
@@ -644,8 +701,81 @@ public class MainActivity extends AppCompatActivity {
         // ===== SAVE IN ROOM DATABASE =====
 // ===== SAVE IN ROOM DATABASE (BACKGROUND THREAD) =====
 // ===== SAVE IN ROOM DATABASE (NO LAMBDA VERSION) =====
+//
+//// Make local final copies
+//        final String fName = name;
+//        final String fAddress = address;
+//        final String fNumber = number;
+//        final double fTotalAmount = totalAmount;
+//        final double fDiscount = discount;
+//        final double fNet = net;
+//        final String fDate = currentDate;
+//
+//// Create final copy of item list
+//        final List<InvoiceItem> finalItemList = new ArrayList<>(itemList);
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                // 1️⃣ Insert Invoice
+//                InvoiceEntity invoice = new InvoiceEntity();
+//                invoice.customerName = fName;
+//                invoice.customerAddress = fAddress;
+//                invoice.customerMobile = fNumber;
+//                invoice.totalAmount = fTotalAmount;
+//                invoice.discount = fDiscount;
+//                invoice.netAmount = fNet;
+//                invoice.date = fDate;
+//
+//                long invoiceId = invoiceDao.insertInvoice(invoice);
+//
+//                // 2️⃣ Insert All Items
+//                List<InvoiceItemEntity> itemEntities = new ArrayList<>();
+//
+////                for (InvoiceItem item : finalItemList) {
+////
+////                    InvoiceItemEntity entity = new InvoiceItemEntity();
+////                    entity.invoiceId = (int) invoiceId;
+////                    entity.productName = item.getProductName();
+////                    entity.qty = item.getQty();
+////                    entity.rate = item.getRate();
+////                    entity.amount = item.getAmount();
+////
+////                    itemEntities.add(entity);
+////                }
+//
+//                for (int i = lastSavedItemIndex; i < finalItemList.size(); i++) {
+//
+//                    InvoiceItem item = finalItemList.get(i);
+//
+//                    InvoiceItemEntity entity = new InvoiceItemEntity();
+//                    entity.invoiceId = (int) invoiceId;
+//                    entity.productName = item.getProductName();
+//                    entity.qty = item.getQty();
+//                    entity.rate = item.getRate();
+//                    entity.amount = item.getAmount();
+//
+//                    itemEntities.add(entity);
+//                }
+//
+//                invoiceDao.insertInvoiceItems(itemEntities);
+//                lastSavedItemIndex = finalItemList.size();
+//
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(MainActivity.this,
+//                                "Invoice + Products Saved Successfully",
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        }).start();
 
-// Make local final copies
+
+
+        // Make local final copies
         final String fName = name;
         final String fAddress = address;
         final String fNumber = number;
@@ -653,6 +783,7 @@ public class MainActivity extends AppCompatActivity {
         final double fDiscount = discount;
         final double fNet = net;
         final String fDate = currentDate;
+        final String fInvoiceNo = invoiceNo;
 
 // Create final copy of item list
         final List<InvoiceItem> finalItemList = new ArrayList<>(itemList);
@@ -661,22 +792,45 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                // 1️⃣ Insert Invoice
-                InvoiceEntity invoice = new InvoiceEntity();
-                invoice.customerName = fName;
-                invoice.customerAddress = fAddress;
-                invoice.customerMobile = fNumber;
-                invoice.totalAmount = fTotalAmount;
-                invoice.discount = fDiscount;
-                invoice.netAmount = fNet;
-                invoice.date = fDate;
+                long invoiceId;
 
-                long invoiceId = invoiceDao.insertInvoice(invoice);
+                // 1️⃣ FIRST TIME INSERT
+                if (savedInvoiceId == -1) {
 
-                // 2️⃣ Insert All Items
+                    InvoiceEntity invoice = new InvoiceEntity();
+                    invoice.invoiceNo = fInvoiceNo;
+                    invoice.customerName = fName;
+                    invoice.customerAddress = fAddress;
+                    invoice.customerMobile = fNumber;
+                    invoice.totalAmount = fTotalAmount;
+                    invoice.discount = fDiscount;
+                    invoice.netAmount = fNet;
+                    invoice.date = fDate;
+
+                    invoiceId = invoiceDao.insertInvoice(invoice);
+
+                    savedInvoiceId = (int) invoiceId;
+
+                }
+                else {
+
+                    // 2️⃣ UPDATE TOTALS
+                    invoiceDao.updateInvoiceTotals(
+                            savedInvoiceId,
+                            fTotalAmount,
+                            fDiscount,
+                            fNet
+                    );
+
+                    invoiceId = savedInvoiceId;
+                }
+
+                // 3️⃣ Insert ONLY NEW ITEMS
                 List<InvoiceItemEntity> itemEntities = new ArrayList<>();
 
-                for (InvoiceItem item : finalItemList) {
+                for (int i = lastSavedItemIndex; i < finalItemList.size(); i++) {
+
+                    InvoiceItem item = finalItemList.get(i);
 
                     InvoiceItemEntity entity = new InvoiceItemEntity();
                     entity.invoiceId = (int) invoiceId;
@@ -685,22 +839,26 @@ public class MainActivity extends AppCompatActivity {
                     entity.rate = item.getRate();
                     entity.amount = item.getAmount();
 
-                    itemEntities.add(entity);
+                    long itemId = invoiceDao.insertInvoiceItem(entity);
+
+                    // 👇 RecyclerView object me database id set karo
+                    item.setItemId((int) itemId);
                 }
 
-                invoiceDao.insertInvoiceItems(itemEntities);
+                lastSavedItemIndex = finalItemList.size();
+
+                lastSavedItemIndex = finalItemList.size();
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(MainActivity.this,
-                                "Invoice + Products Saved Successfully",
+                                "Invoice Updated Successfully",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         }).start();
-
 
 
 

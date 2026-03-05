@@ -2,18 +2,26 @@ package com.example.kuhuinvoicepro;
 
 public class InvoiceItem {
 
+    private int itemId;
     private int srNo;
     private String productName;
     private double qty;
     private double rate;
     private double amount;
 
-    public InvoiceItem(int srNo, String productName, double qty, double rate) {
+    public InvoiceItem(int itemId, int srNo, String productName, double qty, double rate) {
+        this.itemId = itemId;
         this.srNo = srNo;
         this.productName = productName;
         this.qty = qty;
         this.rate = rate;
         this.amount = rate;
+    }
+
+    public int getItemId() { return itemId; }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public int getSrNo() { return srNo; }

@@ -8,7 +8,7 @@ public class InvoiceEntity {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
-
+    public String invoiceNo;
     public String customerName;
     public String customerAddress;
     public String customerMobile;
