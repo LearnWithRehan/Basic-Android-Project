@@ -47,8 +47,8 @@ public class DateReportAdapter extends RecyclerView.Adapter<DateReportAdapter.Vi
             items.append(item.productName)
                     .append(" | Qty: ")
                     .append(item.qty +"kg")
-                    .append(" | Rate: ")
-                    .append(item.rate)
+//                    .append(" | Rate: ")
+//                    .append(item.rate)
                     .append(" | ₹")
                     .append(item.amount)
                     .append("\n");

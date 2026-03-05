@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerItems = findViewById(R.id.recyclerItems);
 
         tvTotalQty = findViewById(R.id.tvTotalQty);
-        tvTotalRate = findViewById(R.id.tvTotalRate);
+      //  tvTotalRate = findViewById(R.id.tvTotalRate);
         tvTotalAmount = findViewById(R.id.tvTotalAmount);
         tvTotalProduct = findViewById(R.id.tvTotalProduct);
         etDiscount = findViewById(R.id.etDiscount);
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
         tvTotalProduct.setText("Items: " + itemList.size());
         tvTotalQty.setText(String.valueOf(totalQty));
-        tvTotalRate.setText(String.valueOf(totalRate));
+     //   tvTotalRate.setText(String.valueOf(totalRate));
         tvTotalAmount.setText(String.format("%.2f", totalAmount));
 
         updateNetAmount();
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         // ✅ EMPTY FIELD VALIDATION
         if (qtyStr.isEmpty() || rateStr.isEmpty()) {
             Toast.makeText(this,
-                    "Please enter Quantity and Rate",
+                    "Please enter Quantity and Amount",
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
         totalAmount += item.getAmount();
 
         tvTotalQty.setText(String.valueOf(totalQty)+"kg");
-        tvTotalRate.setText(String.valueOf(totalRate));
+       // tvTotalRate.setText(String.valueOf(totalRate));
         tvTotalAmount.setText(String.format("%.2f", totalAmount));
         tvTotalProduct.setText("Items: " + itemList.size());
 
@@ -501,7 +501,7 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawText("Sr", 70, y + 40, paint);
         canvas.drawText("Product", 150, y + 40, paint);
         canvas.drawText("Qty", 600, y + 40, paint);
-        canvas.drawText("Rate", 800, y + 40, paint);
+       // canvas.drawText("Rate", 800, y + 40, paint);
         canvas.drawText("Amount", 1000, y + 40, paint);
 
         y += 60;
@@ -532,12 +532,12 @@ public class MainActivity extends AppCompatActivity {
                     paint
             );
 
-            canvas.drawText(
-                    String.format("%.2f", item.getRate()),
-                    850,
-                    y + 35,
-                    paint
-            );
+//            canvas.drawText(
+//                    String.format("%.2f", item.getRate()),
+//                    850,
+//                    y + 35,
+//                    paint
+//            );
 
             canvas.drawText(
                     "₹ " + String.format("%.2f", item.getAmount()),
@@ -579,12 +579,12 @@ public class MainActivity extends AppCompatActivity {
                 paint
         );
 
-        canvas.drawText(
-                String.format("%.2f", totalRate),
-                850,
-                y + 40,
-                paint
-        );
+//        canvas.drawText(
+//                String.format("%.2f", totalRate),
+//                850,
+//                y + 40,
+//                paint
+//        );
 
         canvas.drawText(
                 "₹ " + String.format("%.2f", totalAmount),

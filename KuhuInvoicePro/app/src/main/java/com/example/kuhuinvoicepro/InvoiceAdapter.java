@@ -43,8 +43,8 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
         holder.tvSr.setText(String.valueOf(position + 1));
 
         holder.tvProduct.setText(item.getProductName());
-        holder.tvQty.setText(item.getQty() + " kg");
-        holder.tvRate.setText(String.valueOf(item.getRate()));
+        holder.tvQty.setText(item.getQty() + "kg");
+        //holder.tvRate.setText(String.valueOf(item.getRate()));
         holder.tvAmount.setText(String.format("%.2f", item.getAmount()));
 
         // ✅ Item Click
@@ -85,7 +85,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ViewHold
             tvSr = itemView.findViewById(R.id.tvSr);
             tvProduct = itemView.findViewById(R.id.tvProduct);
             tvQty = itemView.findViewById(R.id.tvQty);
-            tvRate = itemView.findViewById(R.id.tvRate);
+           // tvRate = itemView.findViewById(R.id.tvRate);
             tvAmount = itemView.findViewById(R.id.tvAmount);
         }
     }

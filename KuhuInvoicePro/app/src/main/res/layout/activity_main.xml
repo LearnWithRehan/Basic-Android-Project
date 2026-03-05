@@ -231,7 +231,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rate"
+                    android:text="Amount"
                     android:textStyle="bold"
                     android:textColor="#555555"
                     android:layout_marginTop="12dp" />
@@ -243,7 +243,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/edittext_bg"
                     android:padding="12dp"
-                    android:hint="Enter Rate"
+                    android:hint="Enter Amount"
                     android:textColor="#000"
                     android:textColorHint="#999"
                     android:inputType="numberDecimal" />
@@ -296,18 +296,18 @@
                     android:text="Qty"
                     android:textStyle="bold"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-                    android:gravity="end"
-                    android:text="Rate"
-                    android:textStyle="bold"/>
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="0.9"-->
+<!--                    android:gravity="end"-->
+<!--                    android:text="Rate"-->
+<!--                    android:textStyle="bold"/>-->
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.8"
                     android:gravity="end"
                     android:text="Amount"
                     android:textStyle="bold"/>
@@ -359,27 +359,27 @@
                     android:id="@+id/tvTotalQty"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
+                    android:layout_weight="0.8"
                     android:gravity="end"
                     android:text="0"
                     android:textColor="#1976D2"
                     android:textStyle="bold"/>
 
-                <TextView
-                    android:id="@+id/tvTotalRate"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-                    android:gravity="end"
-                    android:text="0"
-                    android:textColor="#388E3C"
-                    android:textStyle="bold"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/tvTotalRate"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="0.9"-->
+<!--                    android:gravity="end"-->
+<!--                    android:text="0"-->
+<!--                    android:textColor="#388E3C"-->
+<!--                    android:textStyle="bold"/>-->
 
                 <TextView
                     android:id="@+id/tvTotalAmount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.8"
                     android:gravity="end"
                     android:text="0.00"
                     android:textStyle="bold"

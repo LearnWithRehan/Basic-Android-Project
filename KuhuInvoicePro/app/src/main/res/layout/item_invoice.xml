@@ -29,25 +29,25 @@
         android:id="@+id/tvQty"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.7"
+        android:layout_weight="0.9"
         android:gravity="end"
         android:textColor="#1976D2"
         android:fontFamily="monospace"/>
 
-    <TextView
-        android:id="@+id/tvRate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.9"
-        android:gravity="end"
-        android:textColor="#388E3C"
-        android:fontFamily="monospace"/>
+<!--    <TextView-->
+<!--        android:id="@+id/tvRate"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="0.9"-->
+<!--        android:gravity="end"-->
+<!--        android:textColor="#388E3C"-->
+<!--        android:fontFamily="monospace"/>-->
 
     <TextView
         android:id="@+id/tvAmount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="1.6"
         android:gravity="end"
         android:textStyle="bold"
         android:textColor="#F57C00"

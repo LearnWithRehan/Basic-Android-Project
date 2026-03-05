@@ -13,7 +13,7 @@ public class InvoiceItem {
         this.productName = productName;
         this.qty = qty;
         this.rate = rate;
-        this.amount = qty * rate;
+        this.amount = rate;
     }
 
     public int getSrNo() { return srNo; }
