@@ -8,29 +8,51 @@
 
     <!-- Header -->
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="vertical"
-        android:gravity="center"
+        android:layout_height="50dp"
         android:background="#2F80ED">
 
-        <TextView
-            android:text="📊 Date Wise Sales Report"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <!-- Center Content -->
 
-        <TextView
-            android:text="Search invoices between dates"
-            android:textColor="#E3E3E3"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </LinearLayout>
+            <TextView
+                android:text="📊 Date Wise Sales Report"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="Search invoices between dates"
+                android:textColor="#E3E3E3"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <!-- PDF ICON RIGHT CORNER -->
+
+        <ImageView
+            android:id="@+id/btnPdf"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="end|top"
+            android:layout_margin="12dp"
+            android:padding="6dp"
+            android:background="#1FFFFFFF"
+            android:src="@android:drawable/ic_menu_save"
+            app:tint="#FFFFFF"/>
+
+    </FrameLayout>
 
 
     <!-- Content Area -->

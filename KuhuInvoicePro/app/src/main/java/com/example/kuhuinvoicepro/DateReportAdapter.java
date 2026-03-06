@@ -33,6 +33,7 @@ public class DateReportAdapter extends RecyclerView.Adapter<DateReportAdapter.Vi
 
         InvoiceWithItems data = list.get(position);
         holder.txtDate.setText("Date : " + data.invoice.date);
+        holder.txtInvoice.setText("InvoiceNo: " + data.invoice.invoiceNo);
         holder.txtCustomer.setText("Customer : " + data.invoice.customerName);
         holder.txtAddress.setText("Address: " + data.invoice.customerAddress);
         holder.txtMobile.setText("Mobile: " + data.invoice.customerMobile);
@@ -65,11 +66,12 @@ public class DateReportAdapter extends RecyclerView.Adapter<DateReportAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtCustomer,txtAddress,txtMobile,txtNetAmt, txtDate, txtAmount,txtDiscount, txtItems;
+        TextView txtInvoice,txtCustomer,txtAddress,txtMobile,txtNetAmt, txtDate, txtAmount,txtDiscount, txtItems;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            txtInvoice = itemView.findViewById(R.id.txtInvoice);
             txtCustomer = itemView.findViewById(R.id.txtCustomer);
             txtAddress = itemView.findViewById(R.id.txtAddress);
             txtMobile = itemView.findViewById(R.id.txtMobile);
