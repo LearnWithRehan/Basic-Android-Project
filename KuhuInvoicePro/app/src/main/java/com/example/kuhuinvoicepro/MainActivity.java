@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     int lastSavedItemIndex = 0;
     String invoiceNo = null;
     int savedInvoiceId = -1;
+
+    ProductDao productDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         database = AppDatabase.getInstance(this);
         invoiceDao = database.invoiceDao();
+        productDao = database.productDao();
         itemList = new ArrayList<>();
         adapter = new InvoiceAdapter(itemList, position -> {
             showDeleteDialog(position);
@@ -84,14 +88,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerItems.setLayoutManager(new LinearLayoutManager(this));
         recyclerItems.setAdapter(adapter);
 
-        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.product_list,
-                R.layout.spinner_item
-        );
+//        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
+//                this,
+//                R.array.product_list,
+//                R.layout.spinner_item
+//        );
+//
+//        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+//        spProduct.setAdapter(spinnerAdapter);
 
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spProduct.setAdapter(spinnerAdapter);
+        loadProducts();
 
         // IMPORTANT SETTINGS
         recyclerItems.setNestedScrollingEnabled(false);
@@ -160,6 +166,37 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+
+    private void loadProducts() {
+
+        new Thread(() -> {
+
+            List<String> productList = productDao.getAllProductNames();
+
+            // Default option add
+            productList.add(0, "प्रोडक्ट चुनें");
+
+            runOnUiThread(() -> {
+
+                ArrayAdapter<String> adapter =
+                        new ArrayAdapter<>(
+                                this,
+                                R.layout.spinner_item,
+                                productList
+                        );
+
+                adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+
+                spProduct.setAdapter(adapter);
+
+                // Default selection
+                spProduct.setSelection(0);
+
+            });
+
+        }).start();
     }
 
 

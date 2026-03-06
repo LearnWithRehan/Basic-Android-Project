@@ -21,12 +21,11 @@ public class DashboardActivity extends AppCompatActivity {
         recyclerDashboard = findViewById(R.id.recyclerDashboard);
 
         List<DashboardItem> list = new ArrayList<>();
+
         list.add(new DashboardItem("🧾", "Create Invoice"));
+        list.add(new DashboardItem("➕", "Add Item"));
         list.add(new DashboardItem("📅", "Date Wise Report"));
-        list.add(new DashboardItem("👤", "Customer Wise Report"));
-        list.add(new DashboardItem("💰", "Monthly Total Sale"));
-        list.add(new DashboardItem("📊", "Sales Dashboard"));
-        list.add(new DashboardItem("📤", "Excel Export"));
+       // list.add(new DashboardItem("👤", "Customer Wise Report"));
 
         recyclerDashboard.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerDashboard.setAdapter(new DashboardAdapter(this, list));

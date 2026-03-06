@@ -13,6 +13,12 @@
         android:theme="@style/Theme.KuhuInvoicePro"
         tools:targetApi="31">
         <activity
+            android:name=".AddItemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CustomerWiseReportActivity"
+            android:exported="false" />
+        <activity
             android:name=".DateReportActivity"
             android:exported="false" />
         <activity

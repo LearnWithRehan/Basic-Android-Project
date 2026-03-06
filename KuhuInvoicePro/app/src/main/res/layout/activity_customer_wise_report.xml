@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F4F6F8"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Search Customer -->
+    <AutoCompleteTextView
+        android:id="@+id/autoCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Search Customer Name"
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"/>
+
+    <!-- Customer Details -->
+    <TextView
+        android:id="@+id/tvCustomerDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:textSize="16sp"/>
+
+    <!-- Customer Invoice List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerCustomerInvoices"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

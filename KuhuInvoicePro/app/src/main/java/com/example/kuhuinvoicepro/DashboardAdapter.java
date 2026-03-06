@@ -45,10 +45,23 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
                 context.startActivity(intent);
             }
 
-            else if (position == 1) {
+            if (position == 1) {
+                // Create Invoice
+                Intent intent = new Intent(context, AddItemActivity.class);
+                context.startActivity(intent);
+            }
+
+            else if (position == 2) {
                 // Date Report
                 Intent intent = new Intent(context, DateReportActivity.class);
                 context.startActivity(intent);
+            }
+
+            else if (position == 3) {
+
+                Intent intent = new Intent(context, CustomerWiseReportActivity.class);
+                context.startActivity(intent);
+
             }
 
         });
