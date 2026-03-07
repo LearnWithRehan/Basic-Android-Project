@@ -94,12 +94,40 @@ public interface InvoiceDao {
     @Query("SELECT DISTINCT customerName FROM invoice_table ORDER BY customerName ASC")
     List<String> getDistinctCustomerNames();
 
-    @Query("SELECT DISTINCT customerName FROM invoice_table WHERE customerName LIKE :search || '%' ORDER BY customerName ASC")
-    List<String> searchCustomerNames(String search);
+//    @Query("SELECT DISTINCT customerName FROM invoice_table WHERE customerName LIKE :search || '%' ORDER BY customerName ASC")
+//    List<String> searchCustomerNames(String search);
 
 
 
     @Query("SELECT productName FROM product_table ORDER BY productName ASC")
     List<String> getAllProductNames();
+
+
+
+    @Query("SELECT invoiceNo FROM invoice_table ORDER BY invoiceNo DESC")
+    List<String> getAllInvoiceNumbers();
+
+    @Query("SELECT * FROM invoice_table WHERE invoiceNo = :invoiceNo LIMIT 1")
+    InvoiceEntity getInvoiceByNumber(String invoiceNo);
+
+    @Query("SELECT * FROM invoice_item_table WHERE invoiceId = :invoiceId")
+    List<InvoiceItemEntity> getInvoiceItems(int invoiceId);
+
+
+    // Auto Suggestion
+    @Query("SELECT invoiceNo FROM invoice_table WHERE invoiceNo LIKE :search || '%'")
+    List<String> searchInvoice(String search);
+
+    // Full Invoice Fetch
+    @Transaction
+    @Query("SELECT * FROM invoice_table WHERE invoiceNo = :invoiceNo")
+    InvoiceWithItems getInvoiceWithItems(String invoiceNo);
+
+
+    @Query("SELECT DISTINCT customerName FROM invoice_table WHERE customerName LIKE :name || '%'")
+    List<String> searchCustomerNames(String name);
+
+    @Query("SELECT * FROM invoice_table WHERE customerName = :name LIMIT 1")
+    InvoiceEntity getCustomerByName(String name);
 
 }

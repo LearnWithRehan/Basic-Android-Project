@@ -36,7 +36,12 @@ public class MainActivity extends AppCompatActivity {
     TextView tvNetAmount;
     Button btnAddItem,btnGeneratePdf,btnClear ;
     RecyclerView recyclerItems;
-    EditText etCustomerName, etCustomerAddress, etCustomerMobile;
+    EditText  etCustomerAddress, etCustomerMobile;
+
+    AutoCompleteTextView etCustomerName;
+
+
+
 
     TextView tvTotalQty, tvTotalRate, tvTotalAmount, tvTotalProduct;
 
@@ -87,6 +92,37 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerItems.setLayoutManager(new LinearLayoutManager(this));
         recyclerItems.setAdapter(adapter);
+
+        List<String> customerList = invoiceDao.searchCustomerNames("");
+
+//        ArrayAdapter<String> adapter =
+//                new ArrayAdapter<>(this,
+//                        android.R.layout.simple_dropdown_item_1line,
+//                        customerList);
+//
+//        etCustomerName.setAdapter(adapter);
+
+        ArrayAdapter<String> customerAdapter =
+                new ArrayAdapter<>(this,
+                        android.R.layout.simple_dropdown_item_1line,
+                        customerList);
+
+        etCustomerName.setAdapter(customerAdapter);
+
+        etCustomerName.setOnItemClickListener((parent, view, position, id) -> {
+
+            String name = parent.getItemAtPosition(position).toString();
+
+            InvoiceEntity data = invoiceDao.getCustomerByName(name);
+
+            if(data != null){
+
+                etCustomerAddress.setText(data.customerAddress);
+                etCustomerMobile.setText(data.customerMobile);
+
+            }
+
+        });
 
 //        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
 //                this,

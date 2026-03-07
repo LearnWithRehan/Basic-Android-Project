@@ -59,7 +59,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
 
             else if (position == 3) {
 
-                Intent intent = new Intent(context, CustomerWiseReportActivity.class);
+                Intent intent = new Intent(context, InvoiceWiseReportActivity.class);
                 context.startActivity(intent);
 
             }
